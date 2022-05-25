@@ -1,0 +1,70 @@
+<div class="wrapper">
+	<div class="col">
+		<div class="drag-drawflow">INPUT</div>
+    <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="spreadsheet">
+			<i class="fas fa-file-excel"></i><span> SpreadSheet</span>
+		</div>
+    <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="database">
+			<i class="fas fa-server"></i><span> Database</span>
+		</div>
+    <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="text">
+			<i class="fas fa-file-alt"></i><span> Text File</span>
+		</div>
+		<div class="drag-drawflow">-----------------------------------------------------------</div>
+    <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="action">
+			<i class="fas fa-location"></i><span> ACTION</span>
+		</div>
+		<div class="drag-drawflow">-----------------------------------------------------------</div>
+    <div class="drag-drawflow"><span> OUTPUT</span></div>
+		<div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="spreadsheetOutput">
+			<i class="fas fa-file-excel"></i><span> SpreadSheet</span>
+		</div>
+    <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="databaseOutput">
+			<i class="fas fa-server"></i><span> Database</span>
+		</div>
+    <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="textOutput">
+			<i class="fas fa-file-alt"></i><span> Text File</span>
+		</div>
+	</div>
+	<div class="col-right">
+		<div id="drawflow" (drop)="drop($event)" (dragover)="allowDrop($event)">
+			<div class="btn-clear" (click)="editor.clearModuleSelected()">Clear</div>
+			<!--div class="bar-zoom">
+				<i class="fas fa-search-minus" (click)="editor.zoom_out()"></i>
+				<i class="fas fa-search" (click)="editor.zoom_reset()"></i>
+				<i class="fas fa-search-plus" (click)="editor.zoom_in()"></i>
+			</div-->
+		</div>
+	</div>
+  <div class="popupWrapper" *ngIf="popupFlag">
+    <div class="popupContainer">
+      <span class="closeIcon" (click)="popupFlag = false"></span>
+      <h3>Select {{title}}</h3>
+      <input id="my-file-selector" type="file" (change)="uploadData($event)" name="uploadExcel" /><br/><br/>
+      <h3>Uploaded {{title}}</h3>
+      <div style="margin-top: 20px; width: 48%; float: left;" *ngFor="let resp of getSpecData(responseData)">
+        <div class="card summary flex justify-content-between" style="height: auto; position: relative;">
+          <span style="position: absolute; right: 10px; cursor: pointer;" (click)="deleteRecord(resp)">Delete</span>
+          <div class="flex" style="flex-direction: column;">
+            <div class="title" title="{{resp?.fileDetail?.filename}}">{{resp?.fileDetail?.filename}}</div>
+            <!--p-checkbox name="groupname" [value]="resp.id" [(ngModel)]="selectedDatabase"></p-checkbox-->
+            <span class="detail">Number of records: {{resp?.data.length}}</span>
+            <div class="flex align-items-center">
+              <button (click)="showInformationDetailMode(resp)" type="button" label="Information" class="p-button-outlined p-button-rounded" style="margin: 10px 10px 0 0">Information</button>
+              <button (click)="showHeaderDetailMode(resp)" type="button" label="Headers" class="p-button-outlined p-button-rounded" style="margin: 10px 10px 0 0">Headers</button>
+              <button (click)="showViewDetailMode(resp)" type="button" label="View Details" class="p-button-outlined p-button-rounded" style="margin: 10px 10px 0 0">View Details</button>
+              <button (click)="selectFile(resp)" type="button" label="Select File" class="p-button-outlined p-button-rounded" style="margin: 10px 10px 0 0">Select</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="popupWrapper" *ngIf="popupFlagExport">
+    <div class="popupContainer">
+      <span class="closeIcon" (click)="popupFlagExport = false"></span>
+      <h3>Output</h3>
+      
+    </div>
+  </div>
+</div>

@@ -1,0 +1,579 @@
+:root {
+  --border-color: #4ea9ff;
+  --color: #eee;
+  --background-color: #333;
+  --background-box-title: #444;
+}
+
+html,
+body {
+  margin: 0px;
+  padding: 0px;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  font-family: "Roboto", sans-serif;
+  background-color: var(--background-color);
+  color: var(--color);
+}
+
+header {
+  height: 66px;
+  border-bottom: 1px solid var(--border-color);
+  padding-left: 20px;
+}
+
+header h2 {
+  margin: 0px;
+  line-height: 66px;
+}
+
+header a {
+  color: black;
+}
+
+.them-edit-link {
+  position: absolute;
+  top: 10px;
+  right: 100px;
+  color: black;
+  font-size: 40px;
+}
+
+.them-edit-link a {
+  text-decoration: none;
+}
+
+.github-link {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  color: black;
+}
+
+.wrapper {
+  width: 100%;
+  height: calc(100vh - 67px);
+  display: flex;
+}
+
+.col {
+  overflow: auto;
+  width: 300px;
+  height: 100%;
+  border-right: 1px solid var(--border-color);
+}
+
+.drag-drawflow {
+  line-height: 50px;
+  /* border-bottom: 1px solid var(--border-color); */
+  padding-left: 20px;
+  cursor: move;
+  user-select: none;
+}
+
+.menu {
+  position: absolute;
+  height: 40px;
+  display: block;
+  background: var(--color);
+  width: 100%;
+  background-color: var(--background-color);
+}
+
+.menu ul {
+  padding: 0px;
+  margin: 0px;
+  line-height: 40px;
+}
+
+.menu ul li {
+  display: inline-block;
+  margin-left: 10px;
+  /* border-right: 1px solid var(--border-color); */
+  padding-right: 10px;
+  line-height: 40px;
+  cursor: pointer;
+}
+
+.menu ul li.selected {
+  font-weight: bold;
+}
+
+.btn-clear {
+  float: right;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: var(--color);
+  font-weight: bold;
+  border: 1px solid #0e5ba3;
+  background: var(--border-color);
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.btn-lock {
+  float: right;
+  position: absolute;
+  bottom: 10px;
+  right: 140px;
+  display: flex;
+  font-size: 24px;
+  color: var(--color);
+  padding: 5px 10px;
+  background: #555555;
+  border-radius: 4px;
+  border-right: 1px solid var(--border-color);
+  z-index: 5;
+  cursor: pointer;
+}
+
+.bar-zoom {
+  float: right;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  display: flex;
+  font-size: 24px;
+  color: var(--color);
+  padding: 5px 10px;
+  background: #555555;
+  border-radius: 4px;
+  border-right: 1px solid var(--border-color);
+  z-index: 5;
+}
+
+.bar-zoom svg {
+  cursor: pointer;
+  padding-left: 10px;
+}
+
+.bar-zoom svg:nth-child(1) {
+  padding-left: 0px;
+}
+
+#drawflow {
+  position: relative;
+  width: calc(100vw - 301px);
+  height: calc(100% - 50px);
+  top: 40px;
+  background: var(--background-color);
+}
+
+@media only screen and (max-width: 768px) {
+  .col {
+    width: 50px;
+  }
+  .col .drag-drawflow span {
+    display: none;
+  }
+  #drawflow {
+    width: calc(100vw - 51px);
+  }
+}
+
+/* Editing Drawflow */
+.drawflow .drawflow-node {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  z-index: 2;
+  background: var(--background-color);
+  border: 1px solid var(--border-color);
+  -webkit-box-shadow: 0 2px 15px 2px var(--border-color);
+  box-shadow: 0 2px 15px 2px var(--border-color);
+  padding: 0px;
+  width: 200px;
+  color: var(--color);
+}
+
+.drawflow .drawflow-node.selected {
+  background: var(--color);
+  border: 1px solid var(--border-color);
+  -webkit-box-shadow: 0 2px 20px 2px var(--border-color);
+  box-shadow: 0 2px 20px 2px var(--border-color);
+}
+
+.drawflow .drawflow-node.selected .title-box {
+  color: var(--background-color);
+  background: var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.drawflow .connection .main-path {
+  stroke: var(--border-color);
+  stroke-width: 3px;
+}
+
+.drawflow .drawflow-node .input,
+.drawflow .drawflow-node .output {
+  height: 15px;
+  width: 15px;
+  border: 2px solid var(--border-color);
+}
+
+.drawflow .drawflow-node .input:hover,
+.drawflow .drawflow-node .output:hover {
+  background: var(--border-color);
+}
+
+.drawflow .drawflow-node .output {
+  right: 10px;
+}
+
+.drawflow .drawflow-node .input {
+  left: -10px;
+  background: var(--color);
+}
+
+.drawflow > .drawflow-delete {
+  border: 2px solid #43b993;
+  background: var(--color);
+  color: #43b993;
+  -webkit-box-shadow: 0 2px 20px 2px #43b993;
+  box-shadow: 0 2px 20px 2px #43b993;
+}
+
+.drawflow-delete {
+  border: 2px solid var(--border-color);
+  background: var(--color);
+  color: var(--border-color);
+  -webkit-box-shadow: 0 2px 20px 2px var(--border-color);
+  box-shadow: 0 2px 20px 2px var(--border-color);
+}
+
+.drawflow-node .title-box {
+  height: 50px;
+  line-height: 50px;
+  background: var(--background-box-title);
+  /* border-bottom: 1px solid var(--border-color); */
+  border-radius: 4px 4px 0px 0px;
+  padding-left: 10px;
+}
+
+.drawflow .title-box svg {
+  position: initial;
+}
+
+.drawflow-node .box {
+  padding: 10px 20px 20px 20px;
+  font-size: 14px;
+  color: var(--color);
+}
+
+.drawflow-node .box p {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.drawflow .drawflow-node.selected .box {
+  color: var(--background-color);
+}
+
+.drawflow-node.welcome {
+  width: 250px;
+}
+
+.drawflow-node.slack .title-box {
+  border-radius: 4px;
+}
+
+.drawflow-node input,
+.drawflow-node select,
+.drawflow-node textarea {
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  height: 30px;
+  line-height: 30px;
+  font-size: 16px;
+  width: 158px;
+  color: #555555;
+}
+
+.drawflow-node textarea {
+  height: 100px;
+}
+
+.drawflow-node.personalized {
+  background: red;
+  height: 200px;
+  text-align: center;
+  color: var(--color);
+}
+
+.drawflow-node.personalized .input {
+  background: yellow;
+}
+
+.drawflow-node.personalized .output {
+  background: green;
+}
+
+.drawflow-node.personalized.selected {
+  background: blue;
+}
+
+.drawflow .connection .point {
+  stroke: var(--border-color);
+  stroke-width: 2;
+  fill: var(--color);
+  transform: translate(-9999px, -9999px);
+}
+
+.drawflow .connection .point.selected,
+.drawflow .connection .point:hover {
+  fill: var(--border-color);
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 7;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
+  /* background-color: rgb(0, 0, 0);
+		background-color: rgba(0, 0, 0, 0.7); */
+  background-color: #333;
+  color: #eee;
+}
+
+.modal-content {
+  position: relative;
+  /* background-color: #fefefe; */
+  background-color: #333;
+  color: #eee;
+  margin: 15% auto;
+  /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 400px;
+  /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+
+.modal .close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 768px) {
+  .modal-content {
+    width: 80%;
+  }
+}
+
+/* -------------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------------- */
+
+.drawflow,
+.drawflow .parent-node {
+  position: relative;
+}
+
+.parent-drawflow {
+  display: flex;
+  overflow: hidden;
+  touch-action: none;
+  outline: 0;
+}
+
+.drawflow {
+  width: 100%;
+  height: 100%;
+  user-select: none;
+}
+
+.drawflow .drawflow-node:hover {
+  cursor: move;
+}
+
+.drawflow .drawflow-node .inputs,
+.drawflow .drawflow-node .outputs {
+  width: 0;
+}
+
+.drawflow .drawflow-node .drawflow_content_node {
+  width: 100%;
+  display: block;
+}
+
+.drawflow .drawflow-node .input,
+.drawflow .drawflow-node .output {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  border-radius: 50%;
+  border: 2px solid #000;
+  cursor: crosshair;
+  z-index: 1;
+  margin-bottom: 5px;
+}
+
+.drawflow .drawflow-node .input {
+  left: -27px;
+  top: 2px;
+  background: #ff0;
+}
+
+.drawflow .drawflow-node .output {
+  right: -3px;
+  top: 2px;
+}
+
+.drawflow svg {
+  z-index: 0;
+  position: absolute;
+  overflow: visible !important;
+}
+
+.drawflow .connection {
+  position: absolute;
+  transform: translate(9999px, 9999px);
+}
+
+.drawflow .connection .main-path {
+  fill: none;
+  stroke-width: 5px;
+  stroke: var(--border-color);
+  transform: translate(-9999px, -9999px);
+}
+
+.drawflow .connection .main-path:hover {
+  stroke: #1266ab;
+  cursor: pointer;
+}
+
+.drawflow .connection .main-path.selected {
+  stroke: #43b993;
+}
+
+.drawflow .connection .point {
+  cursor: move;
+  stroke: #000;
+  stroke-width: 2;
+  fill: #fff;
+  transform: translate(-9999px, -9999px);
+}
+
+.drawflow .connection .point.selected,
+.drawflow .connection .point:hover {
+  fill: #1266ab;
+}
+
+.drawflow .main-path {
+  fill: none;
+  stroke-width: 5px;
+  stroke: var(--border-color);
+}
+
+.drawflow .selectbox {
+  z-index: 3;
+  position: absolute;
+  transform: translate(9999px, 9999px);
+}
+
+.drawflow .selectbox rect {
+  fill: #00f;
+  opacity: 0.5;
+  stroke: #ff0;
+  stroke-width: 5;
+  stroke-opacity: 0.5;
+  transform: translate(-9999px, -9999px);
+}
+
+.drawflow-delete {
+  position: absolute;
+  display: block;
+  width: 30px;
+  height: 30px;
+  background: #000;
+  color: #fff;
+  z-index: 4;
+  border: 2px solid #fff;
+  line-height: 30px;
+  font-weight: 700;
+  text-align: center;
+  border-radius: 50%;
+  font-family: monospace;
+  cursor: pointer;
+}
+
+.drawflow > .drawflow-delete {
+  margin-left: -15px;
+  margin-top: 15px;
+}
+
+.parent-node .drawflow-delete {
+  right: -15px;
+  top: -15px;
+}
+
+.popupWrapper {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba(255,255,255,0.8);
+  z-index: 10;
+}
+.popupWrapper .popupContainer {
+  width: 70%;
+  color: #666;
+  min-height: 200px;
+  max-height: 400px;
+  background: white;
+  margin: 100px auto;
+  position: relative;
+  padding: 10px;
+  overflow: auto;
+}
+
+.popupWrapper .popupContainer h3 {
+  margin: 0;
+}
+
+.popupWrapper .closeIcon:before,
+.popupWrapper .closeIcon:after {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  height: 2px;
+  width: 20px;
+  background: #444;
+}
+
+.popupWrapper .closeIcon {
+  position: absolute;
+  right: 10px;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  top: 10px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+
+.popupWrapper .closeIcon:before,
+.popupWrapper .closeIcon:after {
+  content: ' ';
+  right: 10px;
+  top: 20px;
+  transform: rotate(45deg);
+}
+
+.popupWrapper .closeIcon:after {
+  transform: rotate(-45deg);
+}
